@@ -1,5 +1,5 @@
 # Static site (React + Vite). Connect repo College-review-system-frontend on Render.
-# Set VITE_API_URL to your backend URL, e.g. https://college-review-system-api.onrender.com
+# Backend API (also set in Render dashboard when deploying the static site)
 
 services:
   - type: web
@@ -13,4 +13,4 @@ services:
         destination: /index.html
     envVars:
       - key: VITE_API_URL
-        sync: false
+        value: https://college-review-system-backend-4qtm.onrender.com
