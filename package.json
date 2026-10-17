@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -p tsconfig.app.json --noEmit && vite build",
+    "render-build": "npm install --include=dev && npm run build",
     "preview": "vite preview --host 0.0.0.0 --port ${PORT:-4173}",
     "prestart": "node scripts/verify-dist.mjs",
     "start": "serve dist -s -l tcp://0.0.0.0:${PORT:-4173}"

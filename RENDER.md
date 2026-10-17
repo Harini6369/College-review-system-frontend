@@ -22,9 +22,11 @@ After changing settings: **Clear build cache & deploy**.
 
 | Field | Value |
 |--------|--------|
-| **Build Command** | `npm run build` |
+| **Build Command** | `npm run render-build` (or `npm install --include=dev && npm run build`) |
 | **Publish Directory** | `dist` |
 | **Start Command** | *(leave empty)* |
+
+If the log says **`dist/index.html is missing`**, the build step did not run or failed (often because **`vite` / `typescript` are devDependencies** and Render skipped them). Use the build command above and env **`NPM_CONFIG_PRODUCTION=false`**.
 
 4. **Environment** → **`VITE_API_URL`** = `https://college-review-system-backend-4qtm.onrender.com`  
    (Vite bakes this in at **build** time — redeploy after changing it.)
@@ -41,7 +43,7 @@ Only if you cannot use a Static Site:
 
 | Field | Value |
 |--------|--------|
-| **Build Command** | `npm run build` |
+| **Build Command** | `npm run render-build` |
 | **Start Command** | `npm start` |
 
 Do **not** add a root **Dockerfile** (Render would ignore Node build settings).  
