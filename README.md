@@ -6,7 +6,7 @@ This UI is for local evaluation. It is not a production frontend.
 
 ## Technology stack
 
-- Node.js 24
+- Node.js 20+
 - React 19
 - TypeScript 5
 - Vite 7
@@ -15,7 +15,7 @@ This UI is for local evaluation. It is not a production frontend.
 
 ## Prerequisites
 
-- Node.js 24 or later
+- Node.js 20 or later
 - The backend API running on `http://localhost:5000`
 
 ## Installation
@@ -31,16 +31,14 @@ The app starts at [http://localhost:5173](http://localhost:5173).
 
 Vite proxies `/api` to the backend, so local requests do not need CORS changes. If the API is on another origin, set `VITE_API_URL` in `.env`.
 
-## Docker
-
-Build and run the production UI (nginx + static `dist`):
+## Production build (local)
 
 ```bash
-docker build --build-arg VITE_API_URL=http://localhost:5000 -t college-review-frontend .
-docker run --rm -p 8080:80 college-review-frontend
+npm run build
+npm start
 ```
 
-Full stack (API + MongoDB + UI): see [DOCKER.md](../DOCKER.md) in the parent `assessment` folder.
+Deploy on Render: see [RENDER.md](./RENDER.md).
 
 ## What you can do
 

@@ -1,12 +1,12 @@
-# Static site (React + Vite). Connect repo College-review-system-frontend on Render.
-# Backend API (also set in Render dashboard when deploying the static site)
+# Deploy as a Static Site on Render (recommended).
+# Dashboard: New → Static Site → connect this repo, or apply this Blueprint.
 
 services:
   - type: web
     name: college-review-system-frontend
     runtime: static
-    buildCommand: npm run render-build
-    staticPublishPath: ./dist
+    buildCommand: npm run build
+    staticPublishPath: dist
     routes:
       - type: rewrite
         source: /*

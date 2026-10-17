@@ -6,17 +6,18 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -p tsconfig.app.json --noEmit && vite build",
-    "render-build": "npm install && npm run build",
     "preview": "vite preview --host 0.0.0.0 --port ${PORT:-4173}",
-    "start": "npm run preview"
+    "prestart": "node scripts/verify-dist.mjs",
+    "start": "serve dist -s -l tcp://0.0.0.0:${PORT:-4173}"
   },
   "engines": {
-    "node": ">=24"
+    "node": ">=20"
   },
   "dependencies": {
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-router-dom": "^7.9.4"
+    "react-router-dom": "^7.9.4",
+    "serve": "^14.2.4"
   },
   "devDependencies": {
     "@types/react": "^19.2.2",

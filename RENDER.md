@@ -1,22 +1,16 @@
 # Deploy frontend on Render
 
-## Why you see “No open ports detected on 0.0.0.0”
+## Fix: build succeeds but the site is 404
 
-That happens when a **Web Service** runs **`npm run dev`**. The Vite dev server is for local development only: it binds to **localhost**, not **0.0.0.0**, and Render cannot route traffic to it.
+That usually means a **Web Service** is running **`npm start`** without a **`dist`** folder (Build Command never ran `npm run build`), or the service type is wrong.
 
-**Do not use `npm run dev` on Render.**
+| Symptom | Cause | Fix |
+|--------|--------|-----|
+| Empty **404**, `vary: Origin` | Vite preview with no `dist` | Build Command: **`npm run build`** · Start: **`npm start`** (or use Static Site below) |
+| **No open ports** | **`npm run dev`** on Render | Never use dev on Render |
+| Build never finishes | Build Command is **`npm start`** | Build must exit; use **`npm run build`** only |
 
-## Build stuck 10+ minutes (`npm start` in Build Command)
-
-Render runs the **Build Command** once and waits until it **exits**.  
-If Build Command is **`npm start`** (or **`npm run dev`**), that starts a web server and **never exits**, so the deploy looks “in progress” forever.
-
-| Field | Wrong | Correct |
-|--------|--------|--------|
-| **Build Command** | `npm start` | `npm install && npm run build` (or `npm run render-build`) |
-| **Start Command** | empty or `npm run dev` | **Static Site:** leave empty · **Web Service:** `npm start` |
-
-The log line `Running build command 'npm start'...` means Build Command is wrong — fix it in **Settings → Build & Deploy**, then **Clear build cache & deploy**.
+After changing settings: **Clear build cache & deploy**.
 
 ---
 
@@ -28,33 +22,32 @@ The log line `Running build command 'npm start'...` means Build Command is wrong
 
 | Field | Value |
 |--------|--------|
-| **Build Command** | `npm install && npm run build` |
+| **Build Command** | `npm run build` |
 | **Publish Directory** | `dist` |
 | **Start Command** | *(leave empty)* |
 
-4. **Environment** → add **`VITE_API_URL`** = `https://college-review-system-backend-4qtm.onrender.com`  
-   (Vite bakes this in at **build** time — change it and **redeploy** if the API URL changes.)
+4. **Environment** → **`VITE_API_URL`** = `https://college-review-system-backend-4qtm.onrender.com`  
+   (Vite bakes this in at **build** time — redeploy after changing it.)
 
-5. **Redirects/Rewrites** (SPA): `/*` → `/index.html` (200).
+5. SPA routing is handled by `public/_redirects` and/or **Redirects/Rewrites**: `/*` → `/index.html` (200).
 
-Or use **Blueprint** from this repo’s `render.yaml` (`runtime: static`).
+Or apply this repo’s **`render.yaml`** Blueprint (`runtime: static`).
 
 ---
 
-## Option B — Web Service (only if you must)
+## Option B — Web Service
 
-Use production build + preview, not dev:
+Only if you cannot use a Static Site:
 
 | Field | Value |
 |--------|--------|
-| **Build Command** | `npm install && npm run build` |
+| **Build Command** | `npm run build` |
 | **Start Command** | `npm start` |
 
-`npm start` runs `vite preview` on **`0.0.0.0`** and **`PORT`** (required by Render).
+Do **not** add a root **Dockerfile** (Render would ignore Node build settings).  
+`npm start` serves **`dist`** with SPA fallback via **`serve`**. If `dist` is missing, deploy fails in **`prestart`** with a clear error.
 
-Still set **`VITE_API_URL`** before build (same as Option A).
-
-If the site shows **“Blocked request… not allowed”**, `vite.config.ts` must set `preview.allowedHosts` (already `true` in this repo). Push and redeploy.
+Set **`VITE_API_URL`** before build (same as Option A).
 
 ---
 
@@ -65,3 +58,10 @@ npm run dev
 ```
 
 Open http://localhost:5173 — use `.env` with `VITE_API_URL` pointing at Render or local backend.
+
+Production check locally:
+
+```bash
+npm run build
+npm start
+```
