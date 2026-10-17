@@ -5,7 +5,8 @@ services:
   - type: web
     name: college-review-system-frontend
     runtime: static
-    buildCommand: npm run render-build
+    # Works even if Dashboard Build Command is only `npm install` (postinstall builds on Render).
+    buildCommand: npm install && npm run build
     staticPublishPath: dist
     routes:
       - type: rewrite

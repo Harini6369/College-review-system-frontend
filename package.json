@@ -7,24 +7,24 @@
     "dev": "vite",
     "build": "tsc -p tsconfig.app.json --noEmit && vite build",
     "render-build": "npm install --include=dev && npm run build",
+    "postinstall": "node scripts/postinstall-render.mjs",
     "preview": "vite preview --host 0.0.0.0 --port ${PORT:-4173}",
-    "prestart": "node scripts/verify-dist.mjs",
-    "start": "serve dist -s -l tcp://0.0.0.0:${PORT:-4173}"
+    "start": "node scripts/start.mjs"
   },
   "engines": {
     "node": ">=20"
   },
   "dependencies": {
+    "@vitejs/plugin-react": "^5.0.4",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.9.4",
-    "serve": "^14.2.4"
+    "serve": "^14.2.4",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.9"
   },
   "devDependencies": {
     "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
-    "@vitejs/plugin-react": "^5.0.4",
-    "typescript": "^5.9.3",
-    "vite": "^7.1.9"
+    "@types/react-dom": "^19.2.2"
   }
 }

@@ -22,7 +22,7 @@ After changing settings: **Clear build cache & deploy**.
 
 | Field | Value |
 |--------|--------|
-| **Build Command** | `npm run render-build` (or `npm install --include=dev && npm run build`) |
+| **Build Command** | `npm install` or `npm run render-build` (build runs via postinstall on Render) |
 | **Publish Directory** | `dist` |
 | **Start Command** | *(leave empty)* |
 
@@ -43,8 +43,8 @@ Only if you cannot use a Static Site:
 
 | Field | Value |
 |--------|--------|
-| **Build Command** | `npm run render-build` |
-| **Start Command** | `npm start` |
+| **Build Command** | `npm install` *(minimum)* or `npm run render-build` |
+| **Start Command** | `npm start` *(auto-builds if `dist/` is missing)* |
 
 Do **not** add a root **Dockerfile** (Render would ignore Node build settings).  
 `npm start` serves **`dist`** with SPA fallback via **`serve`**. If `dist` is missing, deploy fails in **`prestart`** with a clear error.
