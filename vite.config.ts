@@ -12,4 +12,9 @@ export default defineConfig({
       '/openapi.json': 'http://localhost:5000',
     },
   },
+  preview: {
+    host: '0.0.0.0',
+    // Port on Render comes from `npm run preview` (--port $PORT in package.json).
+    allowedHosts: true,
+  },
 });

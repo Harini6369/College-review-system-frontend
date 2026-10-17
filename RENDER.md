@@ -54,6 +54,8 @@ Use production build + preview, not dev:
 
 Still set **`VITE_API_URL`** before build (same as Option A).
 
+If the site shows **“Blocked request… not allowed”**, `vite.config.ts` must set `preview.allowedHosts` (already `true` in this repo). Push and redeploy.
+
 ---
 
 ## Local development
