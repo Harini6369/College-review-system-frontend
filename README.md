@@ -31,6 +31,17 @@ The app starts at [http://localhost:5173](http://localhost:5173).
 
 Vite proxies `/api` to the backend, so local requests do not need CORS changes. If the API is on another origin, set `VITE_API_URL` in `.env`.
 
+## Docker
+
+Build and run the production UI (nginx + static `dist`):
+
+```bash
+docker build --build-arg VITE_API_URL=http://localhost:5000 -t college-review-frontend .
+docker run --rm -p 8080:80 college-review-frontend
+```
+
+Full stack (API + MongoDB + UI): see [DOCKER.md](../DOCKER.md) in the parent `assessment` folder.
+
 ## What you can do
 
 - Browse colleges with search, location, sorting, and pagination
