@@ -6,6 +6,18 @@ That happens when a **Web Service** runs **`npm run dev`**. The Vite dev server 
 
 **Do not use `npm run dev` on Render.**
 
+## Build stuck 10+ minutes (`npm start` in Build Command)
+
+Render runs the **Build Command** once and waits until it **exits**.  
+If Build Command is **`npm start`** (or **`npm run dev`**), that starts a web server and **never exits**, so the deploy looks “in progress” forever.
+
+| Field | Wrong | Correct |
+|--------|--------|--------|
+| **Build Command** | `npm start` | `npm install && npm run build` (or `npm run render-build`) |
+| **Start Command** | empty or `npm run dev` | **Static Site:** leave empty · **Web Service:** `npm start` |
+
+The log line `Running build command 'npm start'...` means Build Command is wrong — fix it in **Settings → Build & Deploy**, then **Clear build cache & deploy**.
+
 ---
 
 ## Option A — Static Site (recommended)

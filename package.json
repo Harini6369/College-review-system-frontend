@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -p tsconfig.app.json --noEmit && vite build",
+    "render-build": "npm install && npm run build",
     "preview": "vite preview --host 0.0.0.0 --port ${PORT:-4173}",
     "start": "npm run preview"
   },
